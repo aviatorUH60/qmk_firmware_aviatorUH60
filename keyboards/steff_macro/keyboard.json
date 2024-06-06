@@ -1,0 +1,55 @@
+{
+    "manufacturer": "Dennis",
+    "keyboard_name": "steff_macro",
+    "maintainer": "aviatorUH60",
+    "development_board": "kb2040",
+    "diode_direction": "COL2ROW",
+    "features": {
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "oled": true
+    },
+    "matrix_pins": {
+        "cols": ["GP5", "GP6", "GP7", "GP8", "GP9"],
+        "rows": ["GP2", "GP3", "GP4", "GP19"]
+    },
+    "ws2812": {
+        "pin": "GP17",
+        "driver": "vendor"
+    },
+    "layouts": {
+        "LAYOUT_sm": {
+            "layout": [
+                //UPPER row
+                {"matrix": [0, 0], "x": 0, "y": 0},  // PINKY
+                {"matrix": [0, 1], "x": 1, "y": 0},  // RING
+                {"matrix": [0, 2], "x": 2, "y": 0},  // MIDDLE
+                {"matrix": [0, 3], "x": 3, "y": 0},  // INDEX
+                {"matrix": [0, 4], "x": 4, "y": 0},  // INNER
+
+                //HOME row
+                {"matrix": [1, 0], "x": 0, "y": 1},  // PINKY
+                {"matrix": [1, 1], "x": 1, "y": 1},  // RING
+                {"matrix": [1, 2], "x": 2, "y": 1},  // MIDDLE
+                {"matrix": [1, 3], "x": 3, "y": 1},  // INDEX
+                {"matrix": [1, 4], "x": 4, "y": 1},  // INNER
+
+                //LOWER row
+                {"matrix": [2, 0], "x": 0, "y": 2},  // PINKY
+                {"matrix": [2, 1], "x": 1, "y": 2},  // RING
+                {"matrix": [2, 2], "x": 2, "y": 2},  // MIDDLE
+                {"matrix": [2, 3], "x": 3, "y": 2},  // INDEX
+                {"matrix": [2, 4], "x": 4, "y": 2},  // INNER
+                
+                //THUMB row
+                {"matrix": [3, 0], "x": 0, "y": 3},  // PINKY
+                {"matrix": [3, 1], "x": 1, "y": 3},  // RING
+                {"matrix": [3, 2], "x": 2, "y": 3},  // MIDDLE
+                {"matrix": [3, 3], "x": 3, "y": 3},  // INDEX
+                {"matrix": [3, 4], "x": 4, "y": 3},  // INNER
+
+            ]
+        }
+    }
+}
