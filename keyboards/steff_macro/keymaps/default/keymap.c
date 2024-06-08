@@ -4,8 +4,7 @@
 #include QMK_KEYBOARD_H
 
 enum layer_number {
-    _DOTA_S = 0,
-    _DOTA_D0,
+    _DOTA_D0 = 0,
     _DOTA_D1,
     _DOTA_D2,
     _LAYER_COUNT,        // Insert layers before this one.
@@ -35,18 +34,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       *),
       */
 
-    [ _DOTA_S ] = LAYOUT_sm(
-        LT(0, KC_T),   KC_GRAVE,    KC_N,     KC_Z,         KC_X,               //UPPER
-        KC_Q,          KC_W,        KC_E,     KC_R,         KC_B,               //HOME
-        KC_A,          KC_D,        KC_F,     KC_V,         KC_C,               //LOWER
-        KC_F1,         KC_1,       KC_F4,     KC_Y,         LT( _LAYER_SELECT, KC_MUTE )    //THUMB
-    ),
 
     [ _DOTA_D0 ] = LAYOUT_sm(
-        LT(_DOTA_D0, KC_T),   KC_D,   KC_F,                  KC_Z,   KC_X,
-        KC_Q,                 KC_W,   KC_E,                  KC_R,   KC_C,
-        LT(_DOTA_D0, KC_F4),  KC_N,   KC_B,                  KC_V,   KC_1,
-        LT(_DOTA_D1, KC_A),   KC_F1,  LT(_DOTA_D2, KC_NO),   KC_NO,   LT( _LAYER_SELECT, KC_MUTE )
+        LT(_DOTA_D0, KC_T),   KC_D,                 KC_F,                  KC_Z,    KC_X,
+        KC_Q,                 KC_W,                 KC_E,                  KC_R,    LALT_T(KC_C),
+        LT(_DOTA_D0, KC_F4),  LT(_DOTA_D0, KC_N),   KC_B,                  KC_V,    LSFT_T(KC_1),
+        LT(_DOTA_D1, KC_A),   LT(_DOTA_D0, KC_F1),  LT(_DOTA_D2, KC_NO),   KC_NO,   LT( _LAYER_SELECT, KC_MUTE )
     ),
 
     [ _DOTA_D1 ] = LAYOUT_sm(
@@ -64,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [ _LAYER_SELECT ] = LAYOUT_sm(
-        _______,   TO(_DOTA_S),   TO(_DOTA_D0),   TO(_DOTA_D1),   _______,
+        _______,   _______,   TO(_DOTA_D0),   TO(_DOTA_D1),   _______,
         _______,   _______,   _______,   _______,   _______,
         _______,   _______,   _______,   _______,   _______,
         _______,   _______,   _______,   _______,   LT( _LAYER_SELECT, KC_MUTE )
@@ -77,27 +70,18 @@ void matrix_scan_user(void){
 
 bool process_record_user( uint16_t keycode, keyrecord_t *record ){
     switch( keycode ) {
-        case LT( 0, KC_T ):  // Sends T on Tap and KP7 on hold.
+        case LT(_DOTA_D0, KC_T):{  // Sends T on Tap and KP7 on hold.
             if( record->tap.count && record->event.pressed ) {
                 return true;
                 break;
             } else if( record->event.pressed ) {
-                tap_code16( KC_KP_7 );  // Intercept hold function to send KP7
+                tap_code16( KC_F8 );  // Intercept hold function to send KP7
                 return false;
                 break;
             }
+        }
 
-            case LT( _DOTA_D0, KC_T ):  // Sends T on Tap and KP7 on hold.
-            if( record->tap.count && record->event.pressed ) {
-                return true;
-                break;
-            } else if( record->event.pressed ) {
-                tap_code16( KC_KP_7 );  // Intercept hold function to send KP7
-                return false;
-                break;
-            }
-
-            case LT( _DOTA_D0, KC_F4 ):  // Sends T on Tap and KP7 on hold.
+        case LT( _DOTA_D0, KC_F4 ): {  // Sends T on Tap and KP7 on hold.
             if( record->tap.count && record->event.pressed ) {
                 return true;
                 break;
@@ -106,6 +90,29 @@ bool process_record_user( uint16_t keycode, keyrecord_t *record ){
                 return false;
                 break;
             }
+        }
+
+        case LT(_DOTA_D0, KC_F1): { // Sends T on Tap and KP7 on hold.
+            if( record->tap.count && record->event.pressed ) {
+                return true;
+                break;
+            } else if( record->event.pressed ) {
+                tap_code16( KC_S );  // Intercept hold function to send KP7
+                return false;
+                break;
+            }
+        }
+
+        case LT(_DOTA_D0, KC_N): { // Sends T on Tap and KP7 on hold.
+            if( record->tap.count && record->event.pressed ) {
+                return true;
+                break;
+            } else if( record->event.pressed ) {
+                tap_code16( KC_GRV );  // Intercept hold function to send KP7
+                return false;
+                break;
+            }
+        }
     }
     return true;
 }
@@ -131,12 +138,6 @@ bool oled_task_user(){
     };
 
     switch ( get_highest_layer( layer_state ) ){
-        case _DOTA_S :
-            oled_set_cursor( 0, 0 );        //Set cursor to upper left of screen
-            oled_write_raw_P( DOTA_LOGO, sizeof( DOTA_LOGO ) );     //Draw Dota logo
-            oled_set_cursor( 0, 5 );        //Set cursor below logo
-            oled_write_P( PSTR("Steff"), false );
-            break;
         case _DOTA_D0 :
             oled_set_cursor( 0, 0 );        //Set cursor to upper left of screen
             oled_write_raw_P( DOTA_LOGO, sizeof( DOTA_LOGO ) );     //Draw Dota logo
